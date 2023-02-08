@@ -4,13 +4,13 @@ set -o errexit
 
 cd $SCRIPTS_FOLDER
 
-if [ -n "${DATABASE_URL:-}" ]; then # Check for MongoDB connection if MONGO_URL is set
+if [ -n "${MONGO_URL:-}" ]; then # Check for MongoDB connection if MONGO_URL is set
 	# Poll until we can successfully connect to MongoDB
 	echo 'Connecting to MongoDB...'
 	node <<- 'EOJS'
 	const mongoClient = require('mongodb').MongoClient;
 	setInterval(function() {
-		mongoClient.connect(process.env.DATABASE_URL, function(err, client) {
+		mongoClient.connect(process.env.MONGO_URL, function(err, client) {
 			if (client) {
 				console.log('Successfully connected to MongoDB');
 				client.close();
